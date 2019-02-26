@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestManager initGlide(){
         RequestOptions options = new RequestOptions()
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background);
+                .placeholder(R.drawable.magicpin)
+                .error(R.drawable.magicpin);
 
         return Glide.with(this)
                 .setDefaultRequestOptions(options);

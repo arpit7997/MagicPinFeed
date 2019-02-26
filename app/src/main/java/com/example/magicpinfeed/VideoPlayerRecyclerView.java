@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
 import com.example.magicpinfeed.models.Feed;
@@ -316,6 +317,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         public void onClick(View v) {
             //open another activity to play video in full screen mode
 
+            Toast.makeText(context,videoPlayer.getCurrentPosition()+"",Toast.LENGTH_LONG).show();
 
         }
     };
