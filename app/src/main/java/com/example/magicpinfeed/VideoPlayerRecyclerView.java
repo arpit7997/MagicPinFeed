@@ -1,6 +1,7 @@
 package com.example.magicpinfeed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Handler;
@@ -62,7 +63,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private SimpleExoPlayer videoPlayer;
 
     // vars
-    private ArrayList<Feed> mediaObjects = new ArrayList<>();
+    private ArrayList<Feed> feedArrayList = new ArrayList<>();
     private int videoSurfaceDefaultHeight = 0;
     private int screenDefaultHeight = 0;
     private Context context;
@@ -226,7 +227,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
     public void playVideo(boolean isEndOfList) {
 
-        int targetPosition;
+        final int targetPosition;
 
         if (!isEndOfList) {
             int startPosition = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
@@ -252,7 +253,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
                 targetPosition = startPosition;
             }
         } else {
-            targetPosition = mediaObjects.size() - 1;
+            targetPosition = feedArrayList.size() - 1;
         }
 
         Log.d(TAG, "playVideo: target position: " + targetPosition);
@@ -292,14 +293,27 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
         videoSurfaceView.setPlayer(videoPlayer);
 
-        viewHolderParent.setOnClickListener(videoViewClickListener);
+        viewHolderParent.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent playFullScreen = new Intent(context, FullScreenVideo.class);
+
+                playFullScreen.putExtra("url",feedArrayList.get(targetPosition).getVideo_url());
+                if(videoPlayer!=null){
+                    playFullScreen.putExtra("seekTo", videoPlayer.getCurrentPosition());
+                }
+
+                context.startActivity(playFullScreen);
+            }
+        });
 
         DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter();
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, "MagicPinFeed"), defaultBandwidthMeter);
 
-        String mediaUrl = mediaObjects.get(targetPosition).getVideo_url();
+        String mediaUrl = feedArrayList.get(targetPosition).getVideo_url();
         Uri uri = Uri.parse(mediaUrl);
 
         Handler mainHandler = new Handler();
@@ -312,15 +326,6 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
     }
 
-    private OnClickListener videoViewClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            //open another activity to play video in full screen mode
-
-            Toast.makeText(context,videoPlayer.getCurrentPosition()+"",Toast.LENGTH_LONG).show();
-
-        }
-    };
 
     /**
      * Returns the visible region of the video surface on the screen.
@@ -393,7 +398,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         viewHolderParent = null;
     }
 
-    public void setMediaObjects(ArrayList<Feed> mediaObjects) {
-        this.mediaObjects = mediaObjects;
+    public void setFeed(ArrayList<Feed> feedArrayList) {
+        this.feedArrayList = feedArrayList;
     }
 }

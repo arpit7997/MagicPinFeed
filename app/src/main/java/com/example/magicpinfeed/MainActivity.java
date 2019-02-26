@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(100);
         mRecyclerView.addItemDecoration(itemDecorator);
 
-        mRecyclerView.setMediaObjects(feedArrayList);
+        mRecyclerView.setFeed(feedArrayList);
         VideoPlayerRecyclerAdapter adapter = new VideoPlayerRecyclerAdapter(feedArrayList, initGlide());
         mRecyclerView.setAdapter(adapter);
     }
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.releasePlayer();
         super.onDestroy();
     }
+
     private void initFeedArrayList() {
 
         feedArrayList.add(new Feed("Video 1", "", "https://player.vimeo.com/external/286837767.m3u8?s=42570e8c4a91b98cdec7e7bfdf0eccf54e700b69"));
