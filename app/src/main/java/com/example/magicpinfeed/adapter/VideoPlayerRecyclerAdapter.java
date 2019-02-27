@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.RequestManager;
 import com.example.magicpinfeed.R;
+import com.example.magicpinfeed.VideoPlayerRecyclerView;
 import com.example.magicpinfeed.models.Feed;
 import com.example.magicpinfeed.viewholder.VideoPlayerViewHolder;
 
@@ -37,6 +38,8 @@ public class VideoPlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
+
+
         return feedArrayList.size();
     }
 

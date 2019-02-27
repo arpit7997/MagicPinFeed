@@ -138,6 +138,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             }
         });
 
+
         addOnChildAttachStateChangeListener(new OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
@@ -315,14 +316,6 @@ public class VideoPlayerRecyclerView extends RecyclerView {
                     Toast.makeText(context, "Please let video buffer first", Toast.LENGTH_LONG).show();
                 }
 
-//                Intent playFullScreen = new Intent(context, FullScreenVideo.class);
-//
-//                playFullScreen.putExtra("url",feedArrayList.get(targetPosition).getVideo_url());
-//                if(videoPlayer!=null){
-//                    playFullScreen.putExtra("seekTo", videoPlayer.getCurrentPosition());
-//                }
-//
-//                context.startActivity(playFullScreen);
             }
         });
 

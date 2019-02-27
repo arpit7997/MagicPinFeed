@@ -1,8 +1,13 @@
 package com.example.magicpinfeed;
 
+import android.content.Intent;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -21,12 +26,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Feed> feedArrayList = new ArrayList<>();
 
     private VideoPlayerRecyclerView mRecyclerView;
+    ConstraintLayout constraint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = findViewById(R.id.recycler_view);
+        constraint = findViewById(R.id.constraint);
 
         initFeedArrayList();
 
