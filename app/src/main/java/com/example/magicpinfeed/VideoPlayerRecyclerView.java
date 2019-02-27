@@ -142,7 +142,6 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             @Override
             public void onChildViewAttachedToWindow(View view) {
 
-                Log.d(TAG,"attached");
             }
 
             @Override

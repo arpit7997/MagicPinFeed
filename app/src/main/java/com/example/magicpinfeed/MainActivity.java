@@ -3,6 +3,7 @@ package com.example.magicpinfeed;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         initFeedArrayList();
 
         initRecyclerView();
+
+        Toast.makeText(this, "Scroll to play video feed", Toast.LENGTH_LONG).show();
 
     }
 

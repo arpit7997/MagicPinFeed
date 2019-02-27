@@ -23,7 +23,6 @@ public class SplashScreen extends AppCompatActivity {
                 Intent feedIntent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(feedIntent);
                 SplashScreen.this.finish();
-
             }
         }, 2000);
     }
