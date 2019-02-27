@@ -60,7 +60,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private View viewHolderParent;
     private FrameLayout frameLayout;
     private PlayerView videoSurfaceView;
-    private SimpleExoPlayer videoPlayer;
+    public SimpleExoPlayer videoPlayer;
 
     // vars
     private ArrayList<Feed> feedArrayList = new ArrayList<>();

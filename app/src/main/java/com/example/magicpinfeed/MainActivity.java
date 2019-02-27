@@ -60,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mRecyclerView.videoPlayer.setPlayWhenReady(false);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mRecyclerView.videoPlayer.setPlayWhenReady(true);
+    }
+
     private void initFeedArrayList() {
 
         feedArrayList.add(new Feed("Video 1", "", "https://player.vimeo.com/external/286837767.m3u8?s=42570e8c4a91b98cdec7e7bfdf0eccf54e700b69"));

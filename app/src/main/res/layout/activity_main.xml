@@ -10,6 +10,7 @@
  <com.example.magicpinfeed.VideoPlayerRecyclerView
      android:layout_width="match_parent"
      android:layout_height="match_parent"
+     android:focusableInTouchMode="true"
      android:id="@+id/recycler_view"
      android:orientation="vertical"></com.example.magicpinfeed.VideoPlayerRecyclerView>
 

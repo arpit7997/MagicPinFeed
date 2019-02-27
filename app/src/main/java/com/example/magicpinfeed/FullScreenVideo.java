@@ -31,6 +31,7 @@ import com.google.android.exoplayer2.util.Util;
 public class FullScreenVideo extends AppCompatActivity {
 
     private PlayerView playerView;
+    ExoPlayer player;
     ProgressBar loading;
     private boolean playWhenReady = true;
     private int currentWindow = 0;
@@ -50,16 +51,12 @@ public class FullScreenVideo extends AppCompatActivity {
             url = getIntent().getStringExtra("url");
             seekTo = getIntent().getLongExtra("seekTo",0);
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         //Creating default track selector
         //and init the player
         TrackSelection.Factory adaptiveTrackSelection = new AdaptiveTrackSelection.Factory(new DefaultBandwidthMeter());
-        ExoPlayer player = ExoPlayerFactory.newSimpleInstance(
+
+        player = ExoPlayerFactory.newSimpleInstance(
                 new DefaultRenderersFactory(getApplicationContext()),
                 new DefaultTrackSelector(adaptiveTrackSelection),
                 new DefaultLoadControl());
@@ -144,6 +141,32 @@ public class FullScreenVideo extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        player.setPlayWhenReady(true);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.setPlayWhenReady(false);
+
+        seekTo = player.getCurrentPosition();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+
     }
 
 }
