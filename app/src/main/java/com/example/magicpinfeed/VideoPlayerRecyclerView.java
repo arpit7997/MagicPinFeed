@@ -1,5 +1,6 @@
 package com.example.magicpinfeed;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -71,6 +73,9 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private boolean isVideoViewAdded;
     private RequestManager requestManager;
 
+    private boolean mExoPlayerFullscreen = false;
+    private Dialog mFullScreenDialog;
+
     public VideoPlayerRecyclerView(@NonNull Context context) {
         super(context);
         init(context);
@@ -134,6 +139,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             @Override
             public void onChildViewAttachedToWindow(View view) {
 
+                Log.d(TAG,"attached");
             }
 
             @Override
@@ -223,6 +229,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
             }
         });
+
+        initFullscreenDialog();
     }
 
     public void playVideo(boolean isEndOfList) {
@@ -297,14 +305,22 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             @Override
             public void onClick(View v) {
 
-                Intent playFullScreen = new Intent(context, FullScreenVideo.class);
-
-                playFullScreen.putExtra("url",feedArrayList.get(targetPosition).getVideo_url());
-                if(videoPlayer!=null){
-                    playFullScreen.putExtra("seekTo", videoPlayer.getCurrentPosition());
+                if (videoPlayer.getPlaybackState() == 3) {
+                    if (!mExoPlayerFullscreen) {
+                        openFullscreenDialog();
+                    }
+                } else {
+                    Toast.makeText(context, "Please let video buffer first", Toast.LENGTH_LONG).show();
                 }
 
-                context.startActivity(playFullScreen);
+//                Intent playFullScreen = new Intent(context, FullScreenVideo.class);
+//
+//                playFullScreen.putExtra("url",feedArrayList.get(targetPosition).getVideo_url());
+//                if(videoPlayer!=null){
+//                    playFullScreen.putExtra("seekTo", videoPlayer.getCurrentPosition());
+//                }
+//
+//                context.startActivity(playFullScreen);
             }
         });
 
@@ -365,7 +381,6 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         if (index >= 0) {
             parent.removeViewAt(index);
             isVideoViewAdded = false;
-            viewHolderParent.setOnClickListener(null);
         }
 
     }
@@ -400,5 +415,39 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
     public void setFeed(ArrayList<Feed> feedArrayList) {
         this.feedArrayList = feedArrayList;
+
     }
+
+    private void initFullscreenDialog() {
+
+        mFullScreenDialog = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
+            public void onBackPressed() {
+                if (mExoPlayerFullscreen) {
+                    Log.d("hello", "close full screen");
+                    closeFullscreenDialog();
+                }
+                super.onBackPressed();
+            }
+        };
+    }
+
+
+    private void openFullscreenDialog() {
+
+        removeVideoView(videoSurfaceView);
+        mFullScreenDialog.addContentView(videoSurfaceView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mExoPlayerFullscreen = true;
+        mFullScreenDialog.show();
+    }
+
+
+    private void closeFullscreenDialog() {
+
+        removeVideoView(videoSurfaceView);
+        addVideoView();
+        mExoPlayerFullscreen = false;
+        mFullScreenDialog.dismiss();
+    }
+
+
 }
