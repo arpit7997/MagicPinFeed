@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
 import com.example.magicpinfeed.models.Feed;
+import com.example.magicpinfeed.utils.CommonMethods;
 import com.example.magicpinfeed.viewholder.VideoPlayerViewHolder;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -87,7 +88,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     }
 
 
-    private void init(Context context) {
+    private void init(final Context context) {
         this.context = context.getApplicationContext();
         Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
@@ -112,6 +113,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+
+                CommonMethods.isNetworkConnected(context);
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     Log.d(TAG, "onScrollStateChanged: called.");

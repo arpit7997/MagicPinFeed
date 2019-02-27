@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.magicpinfeed.adapter.VideoPlayerRecyclerAdapter;
 import com.example.magicpinfeed.models.Feed;
+import com.example.magicpinfeed.utils.CommonMethods;
 import com.example.magicpinfeed.utils.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
